@@ -17,7 +17,8 @@ export default class Month extends Component {
         { day: "30112020", days: 2, title: "toto je nadpis" },
         { day: "30112020", days: 1, title: "toto je nadpis 2" },
         { day: "30112020", days: 3, title: "toto je nadpis 3" },
-        { day: "01122020", days: 3, title: "toto je nadpis  prveho" },
+        { day: "01122020", days: 2, title: "toto je nadpis  prveho" },
+        { day: "03122020", days: 2, title: "toto je nadpis  tretieho" },
         { day: "04122020", days: 3, title: "toto je nadpis stvrteho" },
       ],
     };
@@ -51,7 +52,7 @@ export default class Month extends Component {
             }
           }
         } else {
-          let dayItems = calendarDay.data.length;
+          let dayRowsCount = calendarDay.data.length;
           calendarDay.data.push(event);
 
           if (!event.days > 1) {
@@ -59,11 +60,15 @@ export default class Month extends Component {
           }
 
           for (let i = 1; i < event.days; i++) {
-            //Add empty for all undefined rows
-            for (let a = 0; a <= dayItems; a++) {
-              if (a === dayItems) {
+            if (calendarDays[index + i] === undefined) {
+              return;
+            }
+            //Add empty for all undefined rows in next days
+            for (let a = 0; a <= dayRowsCount; a++) {
+              if (a === dayRowsCount) {
                 calendarDays[index + i].data.push(event);
               }
+
               if (calendarDays[index + i].data[a] === undefined) {
                 calendarDays[index + i].data.push({day: 'empty'});
               }
