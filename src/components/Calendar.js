@@ -22,23 +22,7 @@ export default class Calendar extends Component {
     ).getDate();
   }
 
-  //Number of days for a previous month
-  getDaysInPrevMonth() {
-    return new Date(
-      this.state.currentYear,
-      this.state.currentMonth - 1,
-      0
-    ).getDate();
-  }
 
-  //0-6 Sunday is the first month
-  getFirstDayInMonth() {
-    return new Date(
-      this.state.currentYear,
-      this.state.currentMonth - 1,
-      1
-    ).getDay();
-  }
 
   monthSwitchHandler(e) {
     let newMonth = this.state.currentMonth;
@@ -65,7 +49,7 @@ export default class Calendar extends Component {
           data={this.state}
           monthSwitchHandler={this.monthSwitchHandler}
         />
-        <Month/>
+        <Month  data={this.state}/>
 
       </div>
     );

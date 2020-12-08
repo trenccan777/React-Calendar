@@ -4,82 +4,68 @@ import Day from "./Day";
 export default class Month extends Component {
   constructor() {
     super();
-    this.state = {
-      calendarMatrix: [
-        { day: "30112020", data: [] },
-        { day: "01122020", data: [] },
-        { day: "02122020", data: [] },
-        { day: "03122020", data: [] },
-        { day: "04122020", data: [] },
-      ],
+    this.state = {};
+  }
 
-      events: [
-        { day: "30112020", days: 2, title: "toto je nadpis" },
-        { day: "30112020", days: 1, title: "toto je nadpis 2" },
-        { day: "30112020", days: 3, title: "toto je nadpis 3" },
-        { day: "01122020", days: 2, title: "toto je nadpis  prveho" },
-        { day: "03122020", days: 2, title: "toto je nadpis  tretieho" },
-        { day: "04122020", days: 3, title: "toto je nadpis stvrteho" },
-      ],
-    };
+  //Number of days for a previous month
+  // getDaysInPrevMonth() {
+  //   return new Date(
+  //     this.state.currentYear,
+  //     this.state.currentMonth - 1,
+  //     0
+  //   ).getDate();
+  // }
+
+  //0-6 Sunday is the first month
+  // getFirstDayInMonth() {
+  //   return new Date(
+  //     this.state.currentYear,
+  //     this.state.currentMonth - 1,
+  //     1
+  //   ).getDay();
+  // }
+
+  createMonthMatrix() {
+    const currentMonth = this.props.data.currentMonth;
+    const currentYear = this.props.data.currentYear;
+    const currentMonthLength = new Date(currentYear, currentMonth, 0).getDate();
+    const currentMonthFirstDay =
+      new Date(currentYear, currentMonth - 1, 1).getDay() === 0
+        ? 7
+        : new Date(currentYear, currentMonth - 1, 1).getDay();
+    const currentMonthLastDay = new Date(
+      currentYear,
+      currentMonth - 1,
+      currentMonthLength
+    ).getDay();
+    const prevMonthLength = new Date(
+      currentYear,
+      currentMonth - 1,
+      0
+    ).getDate();
+
+    let calendarFirstDay = new Date(currentYear, currentMonth - 1, 1);
+    calendarFirstDay.setDate(
+      calendarFirstDay.getDate() - (currentMonthFirstDay - 1)
+    );
+
+    let calendarMonthLength =
+      currentMonthLength + (currentMonthFirstDay - 1) <= 28
+        ? 28
+        : currentMonthLength + (currentMonthFirstDay - 1) <= 35
+        ? 35
+        : currentMonthLength + (currentMonthFirstDay - 1) <= 42
+        ? 42
+        : 42;
+    console.log(calendarMonthLength);
+
+  
+
+  
   }
 
   render() {
-    let calendarDays = [
-      { day: "30112020", data: [] },
-      { day: "01122020", data: [] },
-      { day: "02122020", data: [] },
-      { day: "03122020", data: [] },
-      { day: "04122020", data: [] },
-    ];
-
-    this.state.events.forEach((event) => {
-      calendarDays.forEach((calendarDay, index) => {
-        if (event.day !== calendarDay.day) {
-          return;
-        }
-
-        if (calendarDay.data.length === 0) {
-          calendarDay.data.push(event);
-
-          if (!event.days > 1) {
-            return;
-          }
-
-          for (let i = 1; i < event.days; i++) {
-            if (calendarDays[index + 1] !== undefined) {
-              calendarDays[index + i].data.push(event);
-            }
-          }
-        } else {
-          let dayRowsCount = calendarDay.data.length;
-          calendarDay.data.push(event);
-
-          if (!event.days > 1) {
-            return;
-          }
-
-          for (let i = 1; i < event.days; i++) {
-            if (calendarDays[index + i] === undefined) {
-              return;
-            }
-            //Add empty for all undefined rows in next days
-            for (let a = 0; a <= dayRowsCount; a++) {
-              if (a === dayRowsCount) {
-                calendarDays[index + i].data.push(event);
-              }
-
-              if (calendarDays[index + i].data[a] === undefined) {
-                calendarDays[index + i].data.push({day: 'empty'});
-              }
-            }
-          }
-        }
-      });
-    });
-
-    console.log(calendarDays);
-
-    return <div>data</div>;
+    this.createMonthMatrix();
+    return <h1>{this.props.data.currentMonth}</h1>;
   }
 }
