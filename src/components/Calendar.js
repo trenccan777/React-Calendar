@@ -13,17 +13,6 @@ export default class Calendar extends Component {
     this.monthSwitchHandler = this.monthSwitchHandler.bind(this);
   }
 
-  //Number of days for a given month
-  getDaysInMonth() {
-    return new Date(
-      this.state.currentYear,
-      this.state.currentMonth,
-      0
-    ).getDate();
-  }
-
-
-
   monthSwitchHandler(e) {
     let newMonth = this.state.currentMonth;
     let newYear = this.state.currentYear;
