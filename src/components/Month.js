@@ -6,33 +6,199 @@ export default class Month extends Component {
   constructor() {
     super();
     this.state = {};
-    this.events = [
-      { date: "2020-01-01", days: 4, row: 1, title: 'event 1', label: 'c-red' },
-      { date: "2020-01-01", days: 2, row: 2, title: 'event 1', label: 'c-red' },
-      { date: "2020-01-01", days: 2, row: 3, title: 'event 1', label: 'c-blue' },
-      { date: "2020-01-02", days: 1, row: 0, title: 'event 1', label: 'c-red' },
-      { date: "2020-01-03", days: 1, row: 0, title: 'event 1', label: 'c-green' },
-      { date: "2020-01-04", days: 3, row: 0, title: 'event 1', label: 'c-green' },
-      { date: "2020-01-04", days: 1, row: 2, title: 'event 1', label: 'c-green' },
-      { date: "2020-01-05", days: 1, row: 1, title: 'event 1', label: 'c-green' },
-      { date: "2020-01-05", days: 3, row: 2, title: 'event 1', label: 'c-green' },
-      { date: "2020-01-06", days: 1, row: 0, title: 'event 1', label: 'c-green' },
-      { date: "2020-01-06", days: 2, row: 1, title: 'event 1', label: 'c-green' },
-      { date: "2020-01-06", days: 1, row: 2, title: 'event 1', label: 'c-green' },
-      { date: "2020-01-07", days: 2, row: 0, title: 'event 1', label: 'c-green' },
-      { date: "2020-01-08", days: 2, row: 1, title: 'event 1', label: 'c-green' },
-      { date: "2020-01-11", days: 3, row: 0, title: 'event 1', label: 'c-blue' },
-      { date: "2020-01-13", days: 1, row: 0, title: 'event 1', label: 'c-blue' },
-      { date: "2020-12-09", days: 2, row: 0, title: 'event 1', label: 'c-green' },
-      { date: "2020-12-15", days: 3, row: 0, title: 'event 2', label: 'c-blue' },
+    this.rawEvents = [
+      { date: "2019-12-31", days: 2, title: "Nadpis udalosti", category: "1", url: "#" },
+      { date: "2020-01-01", days: 4, title: "Nadpis udalosti", category: "1", url: "#" },
+      { date: "2020-01-01", days: 2, title: "Nadpis udalosti", category: "4", url: "#" },
+      { date: "2020-01-01", days: 2, title: "Nadpis udalosti", category: "1", url: "#" },
+      { date: "2020-01-02", days: 1, title: "Nadpis udalosti", category: "3", url: "#" },
+      { date: "2020-01-03", days: 1, title: "Nadpis udalosti", category: "1", url: "#" },
+      { date: "2020-01-04", days: 3, title: "Nadpis udalosti", category: "3", url: "#" },
+      { date: "2020-01-04", days: 1, title: "Nadpis udalosti", category: "4", url: "#" },
+      { date: "2020-01-05", days: 1, title: "Nadpis udalosti", category: "1", url: "#" },
+      { date: "2020-01-05", days: 3, title: "Nadpis udalosti", category: "2", url: "#" },
+      //New week
+      { date: "2020-01-06", days: 1, title: "Nadpis udalosti 1", category: "1", url: "#" },
+      { date: "2020-01-07", days: 2, title: "Nadpis udalosti 2", category: "1", url: "#" },
+      { date: "2020-01-08", days: 2, title: "Nadpis udalosti 3", category: "1", url: "#" },
+      { date: "2020-01-11", days: 3, title: "Nadpis udalosti 4", category: "1", url: "#" },
+      { date: "2020-02-11", days: 3, title: "Nadpis udalosti 5", category: "4", url: "#" },
+      { date: "2020-12-01", days: 2, title: "Nadpis udalosti 6", category: "3", url: "#" },
+      { date: "2020-12-10", days: 3, title: "Nadpis udalosti 7", category: "4", url: "#" },
+      { date: "2020-12-10", days: 2, title: "Nadpis udalosti 8", category: "2", url: "#" },
+      { date: "2020-12-14", days: 2, title: "Nadpis udalosti 9", category: "1", url: "#" },
+      { date: "2020-12-15", days: 2, title: "Nadpis udalosti 10", category: "5", url: "#" },
+      { date: "2021-01-01", days: 4, title: "Nadpis udalosti 10", category: "5", url: "#" },
     ];
+
+    this.events = [];
+  }
+
+  /**
+   * @returns {Array} - array of edited events
+   */
+  splitWeeks() {
+    let events = [];
+    let prevWeekNumber = false;
+    let betweenWeekEvents = [];
+    //Check events which continue troughout weeks and create new
+    this.rawEvents.forEach((rawEvent) => {
+      let dayInWeek =
+        new Date(rawEvent.date).getDay() === 0
+          ? 7
+          : new Date(rawEvent.date).getDay();
+      let weekNumber = new Date(rawEvent.date).getWeekNumber();
+
+      //Init first week in loop
+      prevWeekNumber = prevWeekNumber ? prevWeekNumber : weekNumber;
+
+      //Each new week reset array of rows in week
+      if (prevWeekNumber < weekNumber) {
+        events = [...events, ...betweenWeekEvents];
+        betweenWeekEvents = [];
+        prevWeekNumber = weekNumber;
+      }
+
+      //kazdy tyzden na zaciatok doplnit datumy
+      if (dayInWeek + rawEvent.days > 8) {
+        let newDays = dayInWeek + rawEvent.days - 8;
+        let incrementDate = 8 - dayInWeek;
+        let newDate = new Date(rawEvent.date);
+        newDate.setDate(newDate.getDate() + incrementDate);
+        newDate = newDate.toISOString().slice(0, 10);
+        betweenWeekEvents.push({
+          date: newDate,
+          days: newDays,
+          title: rawEvent.title,
+          category: rawEvent.category,
+          url: rawEvent.url,
+        });
+      }
+      events.push(rawEvent);
+    });
+
+    events = [...events, ...betweenWeekEvents];
+    return events;
+  }
+
+  /**
+   * @param {Array} - edited events about new weeks
+   * @returns {Array} - array of events to render
+   */
+  prepareRenderData(events) {
+    let rowsInWeek = [];
+    let output = [];
+    let prevWeekNumber = false;
+
+    events.forEach((event) => {
+      let weekNumber = new Date(event.date).getWeekNumber();
+      let dayInWeek =
+        new Date(event.date).getDay() === 0 ? 7 : new Date(event.date).getDay();
+      let eventLength = event.days;
+
+      //Init first week in loop
+      prevWeekNumber = prevWeekNumber ? prevWeekNumber : weekNumber;
+
+      //Each new week reset array of rows in week
+      if (prevWeekNumber < weekNumber) {
+        rowsInWeek = [];
+        prevWeekNumber = weekNumber;
+      }
+
+      if (rowsInWeek.length === 0) {
+        //Add first array with first row array
+        rowsInWeek.push({
+          day: [dayInWeek],
+          eventLength: [dayInWeek + eventLength],
+        });
+        output.push({
+          date: event.date,
+          days: eventLength,
+          row: 0,
+          title: event.title,
+          category: event.category,
+          url: event.url,
+        });
+        return;
+      }
+
+      //Row array loop
+      for (let i = 0; i < rowsInWeek.length; i++) {
+        //x1 exists in array?
+        if (rowsInWeek[i].day.includes(dayInWeek)) {
+          //Next array exists?
+          if (rowsInWeek[i + 1] !== undefined) {
+            continue;
+          }
+          //Create array
+          else {
+            rowsInWeek.push({
+              day: [dayInWeek],
+              eventLength: [dayInWeek + eventLength],
+            });
+            output.push({
+              date: event.date,
+              days: eventLength,
+              row: i + 1,
+              title: event.title,
+              category: event.category,
+              url: event.url,
+            });
+            return;
+          }
+        } else {
+          let lengths = rowsInWeek[i].eventLength.sort();
+          if (lengths[lengths.length - 1] <= dayInWeek) {
+            rowsInWeek[i].day.push(dayInWeek);
+            rowsInWeek[i].eventLength.push(dayInWeek + eventLength);
+            output.push({
+              date: event.date,
+              days: eventLength,
+              row: i,
+              title: event.title,
+              category: event.category,
+              url: event.url,
+            });
+            return;
+          } else {
+            //Next array exists?
+            if (rowsInWeek[i + 1] !== undefined) {
+              continue;
+            }
+            //Create array
+            else {
+              rowsInWeek.push({
+                day: [dayInWeek],
+                eventLength: [dayInWeek + eventLength],
+              });
+              output.push({
+                date: event.date,
+                days: eventLength,
+                row: i + 1,
+                title: event.title,
+                category: event.category,
+                url: event.url,
+              });
+              return;
+            }
+          }
+        }
+      }
+    });
+
+    this.events = output;
   }
 
   addEvents(calendarNextDay) {
     let dayEvents = [];
-    this.events.forEach(event => {
+    this.events.forEach((event) => {
       if (calendarNextDay === event.date) {
-        dayEvents.push({days: event.days, row: event.row, title: event.title, label: event.label});
+        dayEvents.push({
+          days: event.days,
+          row: event.row,
+          title: event.title,
+          category: event.category,
+        });
       }
     });
 
@@ -40,7 +206,6 @@ export default class Month extends Component {
   }
 
   createMonthMatrix() {
-
     let monthMatrix = [];
     let days = [];
     const currentMonth = this.props.data.currentMonth;
@@ -74,11 +239,9 @@ export default class Month extends Component {
 
       let nextDayString = calendarNextDay.toISOString().slice(0, 10);
 
-      let data = {date: nextDayString , events: this.addEvents(nextDayString) }
+      let data = { date: nextDayString, events: this.addEvents(nextDayString) };
 
-      days.push(
-        <Day key={i} data={data} />
-      );
+      days.push(<Day key={i} data={data} />);
 
       if ((i + 1) % 7 === 0) {
         monthMatrix.push(
@@ -94,6 +257,8 @@ export default class Month extends Component {
   }
 
   render() {
+    this.prepareRenderData(this.splitWeeks());
+    console.log(this.events);
     let monthMatrix = this.createMonthMatrix();
     return (
       <div id="calendar-table" className="c-table">
@@ -103,3 +268,18 @@ export default class Month extends Component {
     );
   }
 }
+
+/**
+ * Get week Number
+ * @returns {number} - weekNumber
+ */
+// eslint-disable-next-line
+Date.prototype.getWeekNumber = function () {
+  var d = new Date(
+    Date.UTC(this.getFullYear(), this.getMonth(), this.getDate())
+  );
+  var dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+};

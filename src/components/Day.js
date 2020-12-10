@@ -28,7 +28,6 @@ export default class Day extends Component {
     
     return (
 
-
       <div className={"c-day c-cell " + (this.getCurrentDate() === this.props.data.date ? 'c-day-current' : '')}>
         <div className="c-day-number">{this.props.data.date.slice(-2)}</div>
         <div id={this.props.data.date} className="c-day-content">

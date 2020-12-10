@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Month from "./Month";
 import MonthSwitcher from "./MonthSwitcher";
+import CalendarCategories from "./CalendarCategories";
 
 export default class Calendar extends Component {
   constructor() {
@@ -41,6 +42,7 @@ export default class Calendar extends Component {
           data={this.state}
           monthSwitchHandler={this.monthSwitchHandler}
         />
+        <CalendarCategories/>
         <Month data={this.state}/>
 
       </div>

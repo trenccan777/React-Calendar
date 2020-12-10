@@ -4,6 +4,32 @@
   padding: 1em;
 }
 
+.c-cat-wrapper {
+  border-bottom: 1px solid #022138;
+}
+
+.c-cat {
+  margin: 2em auto;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  max-width: 1000px;
+}
+
+.c-square {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  top: -1px;
+  display: inline-block;
+  position: relative;
+}
+
+.c-cat li .c-square {
+  vertical-align: middle;
+}
+
 #month-switcher {
   display: flex;
   justify-content: space-between;
@@ -43,7 +69,6 @@
   flex: 1;
   border-right: 1px solid #ccc;
   position: relative;
-  min-width: 70px;
 }
 
 .c-day-number {
@@ -77,8 +102,14 @@
   white-space: nowrap;
   overflow: hidden;
   position: absolute;
+  border-radius: 4px;
+  height: 20px;
+}
+
+.c-day-text {
   color: #fff;
   font-size: 14px;
+  padding-left: 5px;
 }
 
 .c-red {
@@ -86,9 +117,17 @@
 }
 
 .c-blue {
+  background-color: rgb(72, 135, 228);
+}
+
+.c-dark-blue {
   background-color: #05385e;
 }
 
 .c-green {
   background-color: green;
+}
+
+.c-orange {
+  background-color: orange;
 }

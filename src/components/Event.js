@@ -23,22 +23,44 @@ export default class Event extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions);
+    window.removeEventListener("resize", this.updateDimensions);
   }
 
   render() {
     const eventWidth = this.props.data.days * this.state.cellWidth - 1 + "px";
     const eventRow = this.props.data.row * 22 + "px";
+    let label = "";
+
+    switch (this.props.data.category) {
+      case "1":
+        label = "c-red";
+        break;
+      case "2":
+        label = "c-blue";
+        break;
+      case "3":
+        label = "c-green";
+        break;
+      case "4":
+        label = "c-orange";
+        break;
+      case "5":
+        label = "c-dark-blue";
+        break;
+      default:
+        label = "";
+        break;
+    }
 
     return (
       <div
-        className={this.props.data.label + " c-day-event"}
+        className={label + " c-day-event"}
         style={{
           width: eventWidth,
           top: eventRow,
         }}
       >
-        {this.props.data.title}
+        <div className="c-day-text">{this.props.data.title}</div>
       </div>
     );
   }
