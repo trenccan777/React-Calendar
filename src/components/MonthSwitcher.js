@@ -1,11 +1,7 @@
 import React from "react";
 
 export default function MonthSwitcher(props) {
-  const date = new Date(
-    props.data.currentYear,
-    props.data.currentMonth - 1,
-    1
-  );
+  const date = new Date(props.data.currentYear, props.data.currentMonth - 1, 1);
   const month = date.toLocaleString("default", { month: "long" });
   return (
     <div id="month-switcher">
@@ -17,11 +13,7 @@ export default function MonthSwitcher(props) {
       >
         Prev
       </button>
-      <input
-        name="month"
-        value={month + " " + props.data.currentYear}
-        readOnly
-      />
+      <div className="month-name">{month + " " + props.data.currentYear}</div>
       <button
         name="next-month"
         id="next-month"

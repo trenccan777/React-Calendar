@@ -1,6 +1,22 @@
+.App {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1em;
+}
+
+#month-switcher {
+  display: flex;
+  justify-content: space-between;
+}
+
+.month-name {
+  color: #05385e;
+  font-weight: 600;
+  font-size: 1.5625rem;
+}
+
 .c-table {
-  border: 1px solid #ccc;
-  max-width: 700px;
+  max-width: 100%;
   margin: 2em auto;
   overflow: hidden;
 }
@@ -8,10 +24,15 @@
 .c-week {
   display: flex;
   border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
 }
 
-.c-table > div:last-child {
-  border-bottom: none;
+.c-week.c-weeek-daynames {
+  border-right: none;
+  border-left: none;
+  text-align: center;
+  padding-bottom: 5px;
 }
 
 .c-week > div:last-child {
@@ -25,12 +46,26 @@
   min-width: 70px;
 }
 
+.c-day-number {
+  color: #035ba9;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 3px;
+}
+
 .c-day-name {
-  font-weight: 700;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #05385e;
+  border-right: none;
 }
 
 .c-day {
   min-height: 120px;
+}
+
+.c-day-current {
+  background-color: #e5eef6;
 }
 
 .c-day-content {
@@ -42,14 +77,16 @@
   white-space: nowrap;
   overflow: hidden;
   position: absolute;
+  color: #fff;
+  font-size: 14px;
 }
 
 .c-red {
-  background-color: red;
+  background-color: #ef505f;
 }
 
 .c-blue {
-  background-color: blue;
+  background-color: #05385e;
 }
 
 .c-green {

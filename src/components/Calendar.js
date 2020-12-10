@@ -13,6 +13,8 @@ export default class Calendar extends Component {
     this.monthSwitchHandler = this.monthSwitchHandler.bind(this);
   }
 
+ 
+
   monthSwitchHandler(e) {
     let newMonth = this.state.currentMonth;
     let newYear = this.state.currentYear;
@@ -32,13 +34,14 @@ export default class Calendar extends Component {
   }
 
   render() {
+
     return (
       <div>
         <MonthSwitcher
           data={this.state}
           monthSwitchHandler={this.monthSwitchHandler}
         />
-        <Month  data={this.state}/>
+        <Month data={this.state}/>
 
       </div>
     );
