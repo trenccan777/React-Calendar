@@ -1,24 +1,17 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Month from "./Month";
 import MonthSwitcher from "./MonthSwitcher";
 import CalendarCategories from "./CalendarCategories";
 
-export default class Calendar extends Component {
-  constructor() {
-    super();
-    this.state = {
-      currentYear: new Date().getFullYear(),
-      currentMonth: new Date().getMonth() + 1,
-    };
+export default function Calendar() {
+  const [calendarData, setCalendarData] = useState({
+    currentYear: new Date().getFullYear(),
+    currentMonth: new Date().getMonth() + 1,
+  });
 
-    this.monthSwitchHandler = this.monthSwitchHandler.bind(this);
-  }
-
- 
-
-  monthSwitchHandler(e) {
-    let newMonth = this.state.currentMonth;
-    let newYear = this.state.currentYear;
+  function monthSwitchHandler(e) {
+    let newMonth = calendarData.currentMonth;
+    let newYear = calendarData.currentYear;
 
     if (e.target.name === "next-month") {
       newYear = newMonth === 12 ? newYear + 1 : newYear;
@@ -28,24 +21,20 @@ export default class Calendar extends Component {
       newMonth = newMonth === 1 ? 12 : newMonth - 1;
     }
 
-    this.setState({
+    setCalendarData({
       currentMonth: newMonth,
       currentYear: newYear,
     });
   }
 
-  render() {
-
-    return (
-      <div>
-        <MonthSwitcher
-          data={this.state}
-          monthSwitchHandler={this.monthSwitchHandler}
-        />
-        <CalendarCategories/>
-        <Month data={this.state}/>
-
-      </div>
-    );
-  }
+  return (
+    <div>
+      <MonthSwitcher
+        data={calendarData}
+        monthSwitchHandler={monthSwitchHandler}
+      />
+      <CalendarCategories />
+      <Month data={calendarData} />
+    </div>
+  );
 }

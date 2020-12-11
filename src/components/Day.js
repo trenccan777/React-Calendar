@@ -1,20 +1,34 @@
 import Event from "./Event";
+import React from "react";
 
-import React, { Component } from "react";
+export default function Day(props) {
 
-export default class Day extends Component {
 
-  getCurrentDate() {
+  function getCurrentDate() {
     let currentDate = new Date();
-     currentDate.setDate(
-      currentDate.getDate()
-    );
-
-    return currentDate = currentDate.toISOString().slice(0, 10);
+    currentDate.setDate(currentDate.getDate());
+    return (currentDate = currentDate.toISOString().slice(0, 10));
   }
 
-  render() {
-    let events = this.props.data.events;
+
+ function prevNextMonth() {
+
+  
+  let newDate = new Date(props.data.date);
+  newDate.setDate(newDate.getDate());
+  let cellMonth = newDate.getMonth() + 1;
+  let selectedMonth = props.selectedMonth;
+
+  return cellMonth === selectedMonth ? '' : 'prev-next-month';
+   
+ }
+
+
+
+
+
+  function prepareEvents() {
+    let events = props.data.events;
     let selectedEvents = "";
     let i = 0;
     if (events.length !== 0) {
@@ -25,15 +39,20 @@ export default class Day extends Component {
       i = 0;
     }
 
-    
-    return (
-
-      <div className={"c-day c-cell " + (this.getCurrentDate() === this.props.data.date ? 'c-day-current' : '')}>
-        <div className="c-day-number">{this.props.data.date.slice(-2)}</div>
-        <div id={this.props.data.date} className="c-day-content">
-          {selectedEvents}
-        </div>
-      </div>
-    );
+    return selectedEvents;
   }
+
+  return (
+    <div
+      className={
+        "c-day c-cell " +
+        (getCurrentDate() === props.data.date ? "c-day-current" : "")
+      }
+    >
+      <div className={"c-day-number " + prevNextMonth()}>{props.data.date.slice(-2)}</div>
+      <div id={props.data.date} className="c-day-content">
+        {prepareEvents()}
+      </div>
+    </div>
+  );
 }

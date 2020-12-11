@@ -28,7 +28,8 @@ export default class Month extends Component {
       { date: "2020-12-10", days: 2, title: "Nadpis udalosti 8", category: "2", url: "#" },
       { date: "2020-12-14", days: 2, title: "Nadpis udalosti 9", category: "1", url: "#" },
       { date: "2020-12-15", days: 2, title: "Nadpis udalosti 10", category: "5", url: "#" },
-      { date: "2021-01-01", days: 4, title: "Nadpis udalosti 10", category: "5", url: "#" },
+      { date: "2021-01-01", days: 3, title: "Nadpis udalosti 10", category: "5", url: "#" },
+      { date: "2021-01-01", days: 2, title: "Nadpis udalosti 10", category: "4", url: "#" },
     ];
 
     this.events = [];
@@ -241,7 +242,7 @@ export default class Month extends Component {
 
       let data = { date: nextDayString, events: this.addEvents(nextDayString) };
 
-      days.push(<Day key={i} data={data} />);
+      days.push(<Day selectedMonth={currentMonth} key={i} data={data} />);
 
       if ((i + 1) % 7 === 0) {
         monthMatrix.push(
