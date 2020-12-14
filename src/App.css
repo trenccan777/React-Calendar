@@ -71,6 +71,10 @@
   position: relative;
 }
 
+.prev-next-month > div {
+  opacity: 0.5;
+}
+
 .c-day-number {
   color: #035ba9;
   font-weight: 600;

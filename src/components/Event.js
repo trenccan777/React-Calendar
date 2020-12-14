@@ -11,11 +11,12 @@ export default function Event(props) {
     updateDimensions();
     window.addEventListener("resize", updateDimensions);
     return () => {
-      window.addEventListener("resize", updateDimensions);
+      window.removeEventListener("resize", updateDimensions);
     };
   });
 
-  let label = "";
+
+ let label = "";
 
   switch (props.data.category) {
     case "1":

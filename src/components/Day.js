@@ -12,8 +12,6 @@ export default function Day(props) {
 
 
  function prevNextMonth() {
-
-  
   let newDate = new Date(props.data.date);
   newDate.setDate(newDate.getDate());
   let cellMonth = newDate.getMonth() + 1;
@@ -22,10 +20,6 @@ export default function Day(props) {
   return cellMonth === selectedMonth ? '' : 'prev-next-month';
    
  }
-
-
-
-
 
   function prepareEvents() {
     let events = props.data.events;
@@ -45,11 +39,12 @@ export default function Day(props) {
   return (
     <div
       className={
-        "c-day c-cell " +
-        (getCurrentDate() === props.data.date ? "c-day-current" : "")
+        "c-day c-cell "  +
+        (getCurrentDate() === props.data.date ? "c-day-current" : "") + " " 
+        + prevNextMonth() 
       }
     >
-      <div className={"c-day-number " + prevNextMonth()}>{props.data.date.slice(-2)}</div>
+      <div className="c-day-number " >{props.data.date.slice(-2)}</div>
       <div id={props.data.date} className="c-day-content">
         {prepareEvents()}
       </div>
