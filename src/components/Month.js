@@ -1,38 +1,53 @@
-import React, { Component } from "react";
-import Day from "./Day";
-import DayNames from "./DayNames";
+import React, { Component } from 'react';
+import Day from './Day';
+import DayNames from './DayNames';
 
 export default class Month extends Component {
   constructor() {
     super();
-    this.state = {};
-    this.rawEvents = [
-      { date: "2019-12-31", days: 2, title: "Nadpis udalosti", category: "1", url: "#" },
-      { date: "2020-01-01", days: 4, title: "Nadpis udalosti", category: "1", url: "#" },
-      { date: "2020-01-01", days: 2, title: "Nadpis udalosti", category: "4", url: "#" },
-      { date: "2020-01-01", days: 2, title: "Nadpis udalosti", category: "1", url: "#" },
-      { date: "2020-01-02", days: 1, title: "Nadpis udalosti", category: "3", url: "#" },
-      { date: "2020-01-03", days: 1, title: "Nadpis udalosti", category: "1", url: "#" },
-      { date: "2020-01-04", days: 3, title: "Nadpis udalosti", category: "3", url: "#" },
-      { date: "2020-01-04", days: 1, title: "Nadpis udalosti", category: "4", url: "#" },
-      { date: "2020-01-05", days: 1, title: "Nadpis udalosti", category: "1", url: "#" },
-      { date: "2020-01-05", days: 3, title: "Nadpis udalosti", category: "2", url: "#" },
-      //New week
-      { date: "2020-01-06", days: 1, title: "Nadpis udalosti 1", category: "1", url: "#" },
-      { date: "2020-01-07", days: 2, title: "Nadpis udalosti 2", category: "1", url: "#" },
-      { date: "2020-01-08", days: 2, title: "Nadpis udalosti 3", category: "1", url: "#" },
-      { date: "2020-01-11", days: 3, title: "Nadpis udalosti 4", category: "1", url: "#" },
-      { date: "2020-02-11", days: 3, title: "Nadpis udalosti 5", category: "4", url: "#" },
-      { date: "2020-12-01", days: 2, title: "Nadpis udalosti 6", category: "3", url: "#" },
-      { date: "2020-12-10", days: 3, title: "Nadpis udalosti 7", category: "4", url: "#" },
-      { date: "2020-12-10", days: 2, title: "Nadpis udalosti 8", category: "2", url: "#" },
-      { date: "2020-12-14", days: 2, title: "Nadpis udalosti 9", category: "1", url: "#" },
-      { date: "2020-12-15", days: 2, title: "Nadpis udalosti 10", category: "5", url: "#" },
-      { date: "2021-01-01", days: 3, title: "Nadpis udalosti 10", category: "5", url: "#" },
-      { date: "2021-01-01", days: 2, title: "Nadpis udalosti 10", category: "4", url: "#" },
-    ];
+
+    this.state = {
+      rawEvents: [],
+    };
 
     this.events = [];
+  }
+
+  componentDidMount() {
+    this.getData();
+  }
+
+  componentDidUpdate(prevState) {
+    let prevMonth = prevState.data.currentMonth;
+    let currentMonth = this.props.data.currentMonth;
+    if (prevMonth !== currentMonth) {
+      this.getData();
+    }
+  }
+
+  getData() {
+    let currentMonth = this.props.data.currentMonth;
+    let currentYear = this.props.data.currentYear;
+
+    currentMonth =
+      currentMonth.toString().length === 1 ? '0' + currentMonth : currentMonth;
+
+    fetch(
+      'http://snslp.local/wp-json/react/v1/calendar/' +
+        currentYear +
+        '-' +
+        currentMonth +
+        '-01'
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        data = data === 'no-events' ? [] : data;
+        this.setState({
+          rawEvents: data,
+        });
+      });
   }
 
   /**
@@ -43,13 +58,12 @@ export default class Month extends Component {
     let prevWeekNumber = false;
     let betweenWeekEvents = [];
     //Check events which continue troughout weeks and create new
-    this.rawEvents.forEach((rawEvent) => {
+    this.state.rawEvents.forEach((rawEvent) => {
       let dayInWeek =
         new Date(rawEvent.date).getDay() === 0
           ? 7
           : new Date(rawEvent.date).getDay();
       let weekNumber = new Date(rawEvent.date).getWeekNumber();
-
       //Init first week in loop
       prevWeekNumber = prevWeekNumber ? prevWeekNumber : weekNumber;
 
@@ -259,7 +273,6 @@ export default class Month extends Component {
 
   render() {
     this.prepareRenderData(this.splitWeeks());
-    console.log(this.events);
     let monthMatrix = this.createMonthMatrix();
     return (
       <div id="calendar-table" className="c-table">

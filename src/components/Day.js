@@ -10,7 +10,6 @@ export default function Day(props) {
     return (currentDate = currentDate.toISOString().slice(0, 10));
   }
 
-
  function prevNextMonth() {
   let newDate = new Date(props.data.date);
   newDate.setDate(newDate.getDate());
