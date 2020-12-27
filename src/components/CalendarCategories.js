@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { cats } from '../shared';
+import axios from '../api';
 
 export default function CalendarCategories() {
   const [categories, setCategories] = useState([]);
 
   async function loadCategories() {
-    const response = await fetch(
-      'http://snslp.local/wp-json/wp/v2/typy-udalosti-taxonomy'
-    );
-    const data = await response.json();
+    let data;
+    try {
+      const res = await axios.get('wp-json/wp/v2/typy-udalosti-taxonomy');
+      data = res.data;
+    } catch (error) {
+      data = [];
+    }
+
     setCategories(
       data.map((category) => {
         return { name: category.name, category: category.slug };

@@ -16,15 +16,26 @@ export default function Event(props) {
     };
   });
 
-  return (
-    <div
-      className={cats[props.data.category] + ' c-day-event'}
-      style={{
+  function styling(props) {
+    if (props.modal) {
+      return {};
+    } else {
+      return {
         width: props.data.days * cellWidth - 1 + 'px',
         top: props.data.row * 22 + 'px',
-      }}
+      };
+    }
+  }
+
+  return (
+    <a
+      href={props.data.url}
+      className={cats[props.data.category] + ' c-day-event'}
+      style={styling(props)}
     >
-      <div className="c-day-text">{props.data.title}</div>
-    </div>
+      <div className="c-day-text" title={props.data.title}>
+        {props.data.title}
+      </div>
+    </a>
   );
 }

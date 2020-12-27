@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Day from './Day';
 import DayNames from './DayNames';
-
+import axios from '../api';
 export default class Month extends Component {
   constructor() {
     super();
@@ -32,18 +32,10 @@ export default class Month extends Component {
     currentMonth =
       currentMonth.toString().length === 1 ? '0' + currentMonth : currentMonth;
 
-    fetch(
-      'http://snslp.local/wp-json/react/v1/calendar/' +
-        currentYear +
-        '-' +
-        currentMonth +
-        '-01'
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        data = data === 'no-events' ? [] : data;
+    axios
+      .get(`wp-json/react/v1/calendar/${currentYear}-${currentMonth}-01`)
+      .then((res) => {
+        let data = res.data === 'no-events' ? [] : res.data;
         this.setState({
           rawEvents: data,
         });
@@ -81,6 +73,7 @@ export default class Month extends Component {
         let newDate = new Date(rawEvent.date);
         newDate.setDate(newDate.getDate() + incrementDate);
         newDate = newDate.toISOString().slice(0, 10);
+
         betweenWeekEvents.push({
           date: newDate,
           days: newDays,
@@ -213,6 +206,7 @@ export default class Month extends Component {
           row: event.row,
           title: event.title,
           category: event.category,
+          url: event.url,
         });
       }
     });

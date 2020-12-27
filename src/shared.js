@@ -4,4 +4,5 @@ export const cats = {
   'oddelenie-vonkajsich-vztahov': 'c-green',
   'ine-udalosti': 'c-dark-blue',
   'snslp-vseobecne': 'c-orange',
+  'hidden-event': 'hidden-event',
 };

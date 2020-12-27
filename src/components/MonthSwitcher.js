@@ -1,4 +1,5 @@
 import React from 'react';
+import arrow from '../assets/arrow.svg';
 
 export default function MonthSwitcher(props) {
   const date = new Date(props.data.currentYear, props.data.currentMonth - 1, 1);
@@ -11,7 +12,7 @@ export default function MonthSwitcher(props) {
         type="button"
         onClick={props.monthSwitchHandler}
       >
-        Prev
+        <img className="prev-arrow switch-arrow" src={arrow} alt="arrow" />
       </button>
       <div className="month-name">{month + ' ' + props.data.currentYear}</div>
       <button
@@ -20,7 +21,7 @@ export default function MonthSwitcher(props) {
         type="button"
         onClick={props.monthSwitchHandler}
       >
-        Next
+        <img className="next-arrow switch-arrow" src={arrow} alt="arrow" />
       </button>
     </div>
   );

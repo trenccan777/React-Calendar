@@ -2,6 +2,7 @@
   max-width: 1440px;
   margin: 0 auto;
   padding: 1em;
+  line-height: 1.5;
 }
 
 .c-cat-wrapper {
@@ -13,14 +14,18 @@
   padding: 0;
   list-style: none;
   display: flex;
-  justify-content: space-around;
-  max-width: 1000px;
+  flex-wrap: wrap;
+}
+
+.c-cat li {
+  padding-right: 1em;
+  padding-bottom: 1em;
 }
 
 .c-square {
-  width: 20px;
-  height: 20px;
-  margin-right: 5px;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.3125rem;
   top: -1px;
   display: inline-block;
   position: relative;
@@ -35,10 +40,38 @@
   justify-content: space-between;
 }
 
+#prev-month,
+#next-month {
+  position: relative;
+  display: block;
+  background: #e5eef6;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.switch-arrow {
+  width: 15px;
+  display: inline-block;
+}
+
+.prev-arrow {
+  transform: rotate(90deg);
+}
+
+.next-arrow {
+  transform: rotate(-90deg);
+}
+
 .month-name {
   color: #05385e;
   font-weight: 600;
   font-size: 1.5625rem;
+  display: flex;
+  align-items: center;
 }
 
 .c-table {
@@ -58,7 +91,7 @@
   border-right: none;
   border-left: none;
   text-align: center;
-  padding-bottom: 5px;
+  padding-bottom: 0.3125rem;
 }
 
 .c-week > div:last-child {
@@ -79,7 +112,7 @@
   color: #035ba9;
   font-weight: 600;
   font-size: 0.875rem;
-  padding: 3px;
+  padding: 0.1875em;
 }
 
 .c-day-name {
@@ -90,7 +123,7 @@
 }
 
 .c-day {
-  min-height: 120px;
+  min-height: 8.125rem;
 }
 
 .c-day-current {
@@ -107,13 +140,14 @@
   overflow: hidden;
   position: absolute;
   border-radius: 4px;
-  height: 20px;
+  height: 1.25rem;
+  text-decoration: none;
 }
 
 .c-day-text {
   color: #fff;
-  font-size: 14px;
-  padding-left: 5px;
+  font-size: 0.875rem;
+  padding-left: 0.625em;
 }
 
 .c-red {
@@ -134,4 +168,67 @@
 
 .c-orange {
   background-color: orange;
+}
+
+.hidden-event-btn {
+  position: absolute;
+  color: #035ba9;
+  font-size: 0.875rem;
+  bottom: 0;
+  left: 2px;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.day-modal {
+  position: fixed;
+  padding: 1em;
+  background: #fff;
+  border: 1px solid #ccc;
+  z-index: 3;
+  display: none;
+  box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.302),
+    0 4px 8px 3px rgba(60, 64, 67, 0.149);
+  border-radius: 8px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 250px;
+  max-width: 300px;
+  overflow: hidden;
+}
+
+.day-modal .c-day-event {
+  display: block;
+  position: relative;
+  margin: 0.5em 0;
+  white-space: normal;
+  height: auto;
+}
+
+.active .day-modal {
+  display: block;
+}
+
+.day-modal .close-modal {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 767px) {
+  .c-cat {
+    justify-content: space-around;
+  }
+
+  .day-modal {
+    position: absolute;
+    left: -1em;
+    top: 1em;
+    transform: none;
+  }
 }
