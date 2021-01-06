@@ -10,20 +10,25 @@ export default function CalendarCategories() {
 
   async function loadCategories(lang) {
     let data;
+
+    if (lang === "") {
+      return;
+    }
+
     try {
       const res = await axios.get(
         `${lang === "en" ? "en/" : ""}wp-json/wp/v2/typy-udalosti-taxonomy`
       );
       data = res.data;
+
+      setCategories(
+        data.map((category) => {
+          return { name: category.name, category: category.slug };
+        })
+      );
     } catch (error) {
       data = [];
     }
-
-    setCategories(
-      data.map((category) => {
-        return { name: category.name, category: category.slug };
-      })
-    );
   }
 
   useEffect(() => {

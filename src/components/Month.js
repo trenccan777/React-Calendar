@@ -24,6 +24,10 @@ export default class Month extends Component {
     if (prevMonth !== currentMonth) {
       this.getData();
     }
+
+    if (prevState.lang !== this.props.lang) {
+      this.getData();
+    }
   }
 
   getData() {
@@ -32,6 +36,10 @@ export default class Month extends Component {
 
     currentMonth =
       currentMonth.toString().length === 1 ? "0" + currentMonth : currentMonth;
+
+    if (this.props.lang === "") {
+      return;
+    }
 
     axios
       .get(

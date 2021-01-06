@@ -6,7 +6,7 @@ import CalendarCategories from "./CalendarCategories";
 export const LangContext = React.createContext();
 
 export default function Calendar() {
-  const [lang, setLang] = useState("sk");
+  const [lang, setLang] = useState("");
   const [calendarData, setCalendarData] = useState({
     currentYear: new Date().getFullYear(),
     currentMonth: new Date().getMonth() + 1,
