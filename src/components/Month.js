@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import Day from './Day';
-import DayNames from './DayNames';
-import axios from '../api';
+import React, { Component } from "react";
+import Day from "./Day";
+import DayNames from "./DayNames";
+import axios from "../api";
+
 export default class Month extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       rawEvents: [],
@@ -30,12 +31,16 @@ export default class Month extends Component {
     let currentYear = this.props.data.currentYear;
 
     currentMonth =
-      currentMonth.toString().length === 1 ? '0' + currentMonth : currentMonth;
+      currentMonth.toString().length === 1 ? "0" + currentMonth : currentMonth;
 
     axios
-      .get(`wp-json/react/v1/calendar/${currentYear}-${currentMonth}-01`)
+      .get(
+        `${
+          this.props.lang === "en" ? "en/" : ""
+        }wp-json/react/v1/calendar/${currentYear}-${currentMonth}-01`
+      )
       .then((res) => {
-        let data = res.data === 'no-events' ? [] : res.data;
+        let data = res.data === "no-events" ? [] : res.data;
         this.setState({
           rawEvents: data,
         });

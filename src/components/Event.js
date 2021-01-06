@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { cats } from '../shared';
+import React, { useState, useEffect } from "react";
+import { cats } from "../shared";
 
 export default function Event(props) {
   const [cellWidth, setCellWidth] = useState(0);
 
   function updateDimensions() {
-    setCellWidth(document.getElementsByClassName('c-cell')[0].offsetWidth);
+    setCellWidth(document.getElementsByClassName("c-cell")[0].offsetWidth);
   }
 
   useEffect(() => {
     updateDimensions();
-    window.addEventListener('resize', updateDimensions);
+    window.addEventListener("resize", updateDimensions);
     return () => {
-      window.removeEventListener('resize', updateDimensions);
+      window.removeEventListener("resize", updateDimensions);
     };
   });
 
@@ -21,8 +21,8 @@ export default function Event(props) {
       return {};
     } else {
       return {
-        width: props.data.days * cellWidth - 1 + 'px',
-        top: props.data.row * 22 + 'px',
+        width: props.data.days * cellWidth - 1 + "px",
+        top: props.data.row * 22 + "px",
       };
     }
   }
@@ -30,7 +30,9 @@ export default function Event(props) {
   return (
     <a
       href={props.data.url}
-      className={cats[props.data.category] + ' c-day-event'}
+      className={`${cats[props.data.category]} c-day-event ${
+        props.data.url === "#" ? "not-clickable-url" : ""
+      }`}
       style={styling(props)}
     >
       <div className="c-day-text" title={props.data.title}>
