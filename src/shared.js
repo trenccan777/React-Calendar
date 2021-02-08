@@ -1,8 +1,10 @@
 export const cats = {
-  'odbor-pravnych-sluzieb': 'c-red',
-  'odbor-vyskumu-a-vzdelavania': 'c-blue',
-  'oddelenie-vonkajsich-vztahov': 'c-green',
-  'ine-udalosti': 'c-dark-blue',
-  'snslp-vseobecne': 'c-orange',
-  'hidden-event': 'hidden-event',
+  "ine-udalosti": "c-red",
+  komunikacia: "c-blue",
+  monitoring: "c-green",
+  "pravne-sluzby": "c-dark-blue",
+  "vonkajsie-vztahy": "c-purple",
+  vyskum: "c-orange",
+  vzdelavanie: "c-yellow",
+  "hidden-event": "hidden-event",
 };

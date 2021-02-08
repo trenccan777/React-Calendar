@@ -172,6 +172,14 @@
   background-color: orange;
 }
 
+.c-purple {
+  background-color: #c783c5;
+}
+
+.c-yellow {
+  background-color: #e8e32e;
+}
+
 .hidden-event-btn {
   position: absolute;
   color: #035ba9;
