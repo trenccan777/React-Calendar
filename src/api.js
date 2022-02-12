@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: `http://snslp.sk/`,
+  baseURL: `https://snslp.sk/`,
 });
